@@ -9,17 +9,19 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.mustafa.pixabayapp.AppExecutors
 import com.mustafa.pixabayapp.R
 import com.mustafa.pixabayapp.adapters.PhotoListAdapter
 import com.mustafa.pixabayapp.databinding.FragmentSearchPhotoBinding
 import com.mustafa.pixabayapp.di.Injectable
+import com.mustafa.pixabayapp.models.Status
+import com.mustafa.pixabayapp.ui.common.RetryCallback
 import com.mustafa.pixabayapp.utils.autoCleared
 import kotlinx.android.synthetic.main.fragment_search_photo.*
 import javax.inject.Inject
@@ -32,13 +34,12 @@ class SearchPhotoFragment : Fragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    lateinit var dataBindingComponent: DataBindingComponent
-
     var binding by autoCleared<FragmentSearchPhotoBinding>()
 
     var adapter by autoCleared<PhotoListAdapter>()
 
     lateinit var searchViewModel: SearchPhotoViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,10 +72,27 @@ class SearchPhotoFragment : Fragment(), Injectable {
         }
 
         binding.query = searchViewModel.query
-        binding.photoList.adapter = rvAdapter
+        binding.photoListRecyclerView.adapter = rvAdapter
         adapter = rvAdapter
 
         initSearchInputListener()
+
+
+        binding.callback = object : RetryCallback {
+            override fun retry() {
+                searchViewModel.refresh()
+            }
+        }
+
+        searchViewModel.executeSearch("fruits", 1)
+
+        searchViewModel.getPhotos().observe(viewLifecycleOwner, Observer { result ->
+            if (result.data != null) {
+                adapter.submitList(result.data)
+            } else if (result.status == Status.ERROR){
+                adapter.submitList(null)
+            }
+        })
     }
 
     private fun initSearchInputListener() {
@@ -93,48 +111,48 @@ class SearchPhotoFragment : Fragment(), Injectable {
     }
 
     private fun doSearch(v: View, query: String) {
-//        val query = binding.searchView.query.toString()
-        // Dismiss keyboard
+        searchViewModel.isPerformingNextQuery = false
         dismissKeyboard(v.windowToken)
-        searchViewModel.setQuery(query)
+        searchViewModel.executeSearch(query, 1)
     }
 
-    private fun dismissKeyboard(windowToken: IBinder) {
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow(windowToken, 0)
-    }
+
 
     private fun initRecyclerView() {
 
-        binding.photoList.layoutManager = LinearLayoutManager(activity)
-        binding.photoList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.photoListRecyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.photoListRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val lastPosition = layoutManager.findLastVisibleItemPosition()
                 if (lastPosition == adapter.itemCount - 1) {
-                    Toast.makeText(activity, "We will do it later", Toast.LENGTH_LONG).show()
+                    ///////////////////////////
+                    binding.photoListRecyclerView.post {  // If i don't do that the adapter will consider each new incoming list as whole new and show it starting from the next position
+                        searchViewModel.isPerformingNextQuery = true
+                        searchViewModel.searchNextPage()
+                    }
                 }
             }
         })
-        binding.searchResult = searchViewModel.results
-        searchViewModel.results.observe(viewLifecycleOwner, Observer { result ->
-            adapter.submitList(result?.data)
+
+        searchViewModel.loadMoreStatus.observe(viewLifecycleOwner, Observer { loadingMore ->
+            if (loadingMore == null) {
+                binding.loadingMore = false
+            } else {
+                binding.loadingMore = loadingMore.isRunning
+                val error = loadingMore.errorMessageIfNotHandled
+                if (error != null) {
+                    Snackbar.make(binding.loadMoreBar, error, Snackbar.LENGTH_LONG).show()
+                }
+            }
         })
 
-//        searchViewModel.loadMoreStatus.observe(viewLifecycleOwner, Observer { loadingMore ->
-//            if (loadingMore == null) {
-//                binding.loadingMore = false
-//            } else {
-//                binding.loadingMore = loadingMore.isRunning
-//                val error = loadingMore.errorMessageIfNotHandled
-//                if (error != null) {
-//                    Snackbar.make(binding.loadMoreBar, error, Snackbar.LENGTH_LONG).show()
-//                }
-//            }
-//        })
+        binding.searchResult = searchViewModel.photos
+
+
+}
+    private fun dismissKeyboard(windowToken: IBinder) {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(windowToken, 0)
     }
-
-
-
-
 }

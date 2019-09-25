@@ -5,7 +5,7 @@ import dagger.android.*
 import javax.inject.Inject
  // HasAndroidInjector instead of HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector, HasBroadcastReceiverInjector
 // better boilerplate
-class BixBayApp : Application (), HasAndroidInjector{
+class PixBayApp : Application (), HasAndroidInjector{
 
      @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>

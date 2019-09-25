@@ -18,12 +18,10 @@ class PhotoListAdapter (
     diffCallback = object : DiffUtil.ItemCallback<Photo>() {
         override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
             return oldItem.id == newItem.id
-                    && oldItem.userId == newItem.userId
         }
 
         override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
-            return oldItem.largeImageUrl == newItem.largeImageUrl
-                    && oldItem.likesCount == newItem.likesCount
+            return oldItem.id == newItem.id
         }
     }
 ) {
@@ -46,4 +44,6 @@ class PhotoListAdapter (
     override fun bind(binding: PhotoItemBinding, item: Photo) {
         binding.photo = item
     }
+
+
 }

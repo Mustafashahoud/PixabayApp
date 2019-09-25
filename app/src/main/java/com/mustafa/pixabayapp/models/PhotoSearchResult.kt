@@ -2,10 +2,9 @@ package com.mustafa.pixabayapp.models
 
 import androidx.room.Entity
 
-@Entity(primaryKeys = ["query"])
+@Entity(primaryKeys = ["query", "pageNumber"])
 data class PhotoSearchResult(
     val query: String,
     val photoIds: List<Int>,
-    val totalCount: Int,
-    val next: Int?
+    val pageNumber: Int
 )

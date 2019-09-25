@@ -11,10 +11,10 @@ import com.mustafa.pixabayapp.models.PhotoSearchResult
     entities = [
         Photo::class,
         PhotoSearchResult::class],
-    version = 1,
+    version = 9,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
-abstract class BixABayDatabase : RoomDatabase() {
+abstract class PixBayDatabase : RoomDatabase() {
     abstract fun photoDao() : PhotoDoa
 }

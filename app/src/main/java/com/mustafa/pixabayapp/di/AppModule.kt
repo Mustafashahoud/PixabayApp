@@ -6,9 +6,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.mustafa.pixabayapp.R
-import com.mustafa.pixabayapp.database.BixABayDatabase
+import com.mustafa.pixabayapp.database.PixBayDatabase
 import com.mustafa.pixabayapp.database.PhotoDoa
-import com.mustafa.pixabayapp.network.BixABayService
+import com.mustafa.pixabayapp.network.PixBayService
 import com.mustafa.pixabayapp.utils.Constants
 import com.mustafa.pixabayapp.utils.LiveDataCallAdapterFactory
 import dagger.Module
@@ -23,13 +23,13 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideGithubService(): BixABayService {
+    fun provideGithubService(): PixBayService {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
-            .create(BixABayService::class.java)
+            .create(PixBayService::class.java)
     }
 
     @Singleton
@@ -50,16 +50,16 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideDb(app: Application): BixABayDatabase {
+    fun provideDb(app: Application): PixBayDatabase {
         return Room
-            .databaseBuilder(app, BixABayDatabase::class.java, "PixaBay.db")
+            .databaseBuilder(app, PixBayDatabase::class.java, "PixaBay.db")
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Singleton
     @Provides
-    fun providePhotoDao(db: BixABayDatabase): PhotoDoa {
+    fun providePhotoDao(db: PixBayDatabase): PhotoDoa {
         return db.photoDao()
     }
 }

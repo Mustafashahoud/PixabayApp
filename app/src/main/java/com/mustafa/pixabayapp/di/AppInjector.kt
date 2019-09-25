@@ -14,10 +14,10 @@ import dagger.android.support.AndroidSupportInjection
  * Helper class to automatically inject fragments if they implement [Injectable].
  */
 object AppInjector {
-    fun init(bixBayApp: BixBayApp) {
-        DaggerAppComponent.builder().application(bixBayApp)
-            .build().inject(bixBayApp)
-        bixBayApp
+    fun init(pixBayApp: PixBayApp) {
+        DaggerAppComponent.builder().application(pixBayApp)
+            .build().inject(pixBayApp)
+        pixBayApp
             .registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
                 override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                     handleActivity(activity)

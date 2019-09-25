@@ -23,11 +23,32 @@ abstract class PhotoDoa {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun createPhotoIfNotExists(photo: Photo): Long
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun insert(result: PhotoSearchResult)
 
+    @Query("SELECT * FROM PhotoSearchResult WHERE `query` = :query AND pageNumber = :pageNumber ")
+    abstract fun search(query: String, pageNumber: Int): LiveData<PhotoSearchResult>
+
+    @Query("SELECT * FROM PhotoSearchResult WHERE `query` = :query AND pageNumber = :pageNumber ")
+    abstract fun searchResult(query: String, pageNumber: Int): PhotoSearchResult
+
     @Query("SELECT * FROM PhotoSearchResult WHERE `query` = :query")
-    abstract fun search(query: String): LiveData<PhotoSearchResult>
+    abstract fun findSearchResult(query: String): PhotoSearchResult?
+
+    @Query("SELECT * FROM Photo WHERE id in (:photoIds)")
+    abstract fun loadById(photoIds: List<Int>): LiveData<List<Photo>>
+
+    @Query("UPDATE PhotoSearchResult SET `query` = :query, photoIds = :photoIds, pageNumber = :pageNumber WHERE `query` = :query")
+    abstract fun updatePhotoSearchResult(query: String, photoIds: List<Int>, pageNumber: Int)
+
+    @Query("SELECT pageNumber FROM PhotoSearchResult WHERE `query` = :query")
+    abstract fun getNextPage(query: String): Int
+
+    @Query(" SELECT pageNumber FROM PhotoSearchResult WHERE `query` = :query")
+    abstract fun getPageNumber (query: String): Int
+
+
+
 
     fun loadOrdered(photoIds: List<Int>): LiveData<List<Photo>> {
         val order = SparseIntArray()
@@ -35,6 +56,7 @@ abstract class PhotoDoa {
             order.put(it.value, it.index)
         }
         return Transformations.map(loadById(photoIds), fun(photos: List<Photo>): List<Photo>? {
+            @Suppress("JavaCollectionsStaticMethodOnImmutableList")
             Collections.sort(photos) { r1, r2 ->
                 val pos1 = order.get(r1.id)
                 val pos2 = order.get(r2.id)
@@ -43,7 +65,4 @@ abstract class PhotoDoa {
             return photos
         })
     }
-
-    @Query("SELECT * FROM Photo WHERE id in (:photoIds)")
-    protected abstract fun loadById(photoIds: List<Int>): LiveData<List<Photo>>
 }

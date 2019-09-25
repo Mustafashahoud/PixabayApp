@@ -2,11 +2,11 @@ package com.mustafa.pixabayapp.models
 
 import androidx.room.Entity
 import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(
-    indices = [Index("id")],
-    primaryKeys = ["userId"])
+    indices = [Index("id")])
 data class Photo(
     @SerializedName("largeImageURL")
     val largeImageUrl : String,
@@ -19,6 +19,7 @@ data class Photo(
     @SerializedName("imageWidth")
     val imageWidth: Int,
     @SerializedName("id")
+    @PrimaryKey
     val id: Int,
     @SerializedName("user_id")
     val userId: Long,

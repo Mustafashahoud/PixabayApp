@@ -3,7 +3,7 @@ package com.mustafa.pixabayapp.network
 import com.google.gson.annotations.SerializedName
 import com.mustafa.pixabayapp.models.Photo
 
-class SearchPhotoResponse(
+class PhotoSearchResponse(
     @SerializedName("totalHits")
     val totalHits: Int = 0,
     @SerializedName("hits")
@@ -11,5 +11,5 @@ class SearchPhotoResponse(
     @SerializedName("total")
     val total: Int
 ) {
-    var nexPage: Int? = null
+    var next: Int? = null
 }

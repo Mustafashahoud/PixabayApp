@@ -7,13 +7,14 @@ import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class,
-                        AppModule::class,
+@Component(modules = [
+    AndroidInjectionModule::class,
+    AppModule::class,
     MainActivityModule::class])
 interface AppComponent {
 
     // Fields injection to inject dispatchingAndroidInjector in the BixBayApp
-    fun inject (bixBayApp: BixBayApp)
+    fun inject (pixBayApp: PixBayApp)
 
     @Component.Builder
     interface Builder {

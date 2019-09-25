@@ -36,7 +36,9 @@ sealed class ApiResponse<T> {
 }
 
 
-data class ApiSuccessResponse<T>(val body: T) : ApiResponse<T>()
+data class ApiSuccessResponse<T>(val body: T) : ApiResponse<T>() {
+    val nextPage: Int = 1
+}
 
 data class ApiErrorResponse<T>(val errorMessage: String) : ApiResponse<T>()
 

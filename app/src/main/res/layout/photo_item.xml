@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{photo.previewUrl}"
-                />
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     style="@style/PixabayImageTextUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     android:text="@{StringUtils.getTags(photo.tags)}"
                     tools:text="FRUIT - FRUIT - FRUIT"/>
 
@@ -50,7 +50,7 @@
                     style="@style/PixabayImageTextUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:text="@{StringUtils.byUser(photo.userName)}"
                     tools:text="Mustafa"/>
 
