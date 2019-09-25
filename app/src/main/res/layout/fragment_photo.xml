@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="photo"
+            type="com.mustafa.pixabayapp.models.Photo"/>
+
+        <import type="com.mustafa.pixabayapp.utils.StringUtils" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/photo_fragment_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:imageUrl="@{photo.webFormatURL}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorTransparentDark"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/photo_fragment_tags"
+                style="@style/PixabayImageTextUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{StringUtils.getTags(photo.tags)}"
+                tools:text="TEST - TEST - TEST"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/photo_fragment_user_name"
+                    style="@style/PixabayImageTextUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@{StringUtils.byUser(photo.userName)}"
+                    tools:text="By: Mustafa"/>
+
+                <TextView
+                    android:id="@+id/photo_fragment_comments"
+                    style="@style/PixabayImageTextUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="4dp"
+                    android:drawableStart="@drawable/ic_comment"
+                    android:text="@{StringUtils.getCommentsAsString(photo.commentsCount)}"
+                    tools:text="2222"/>
+
+                <TextView
+                    android:id="@+id/photo_fragment_favorites"
+                    style="@style/PixabayImageTextUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_toStartOf="@id/photo_fragment_comments"
+                    android:drawableStart="@drawable/ic_favorite"
+                    android:text="@{StringUtils.getFavoritesAsString(photo.favoritesCount)}"
+                    tools:text="2222"/>
+
+                <TextView
+                    android:id="@+id/photo_fragment_likes"
+                    style="@style/PixabayImageTextUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_toStartOf="@id/photo_fragment_favorites"
+                    android:drawableStart="@drawable/ic_like"
+                    android:text="@{StringUtils.getLikesAsString(photo.likesCount)}"
+                    tools:text="2222"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

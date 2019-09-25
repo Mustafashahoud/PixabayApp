@@ -26,8 +26,10 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportFragmentManager.beginTransaction().replace(container.id, SearchPhotoFragment()).commit()
+        supportFragmentManager.beginTransaction()
+            .replace(container.id, SearchPhotoFragment())
+            .addToBackStack("SearchPhotoFragment")
+            .commit()
 
-//        dispatchingAndroidInjector.maybeInject(SearchPhotoFragment())
     }
 }

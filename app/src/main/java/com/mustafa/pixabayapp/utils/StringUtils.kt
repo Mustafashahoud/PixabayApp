@@ -22,4 +22,20 @@ object StringUtils {
     fun byUser(userName: String): String {
         return "By: $userName"
     }
+
+    @JvmStatic
+    fun getCommentsAsString(comments: Int): String {
+        return comments.toString()
+    }
+
+    @JvmStatic
+    fun getLikesAsString(likes: Int): String {
+        return likes.toString()
+    }
+    @JvmStatic
+    fun getFavoritesAsString(favorites: Int): String {
+        return favorites.toString()
+    }
+
+
 }

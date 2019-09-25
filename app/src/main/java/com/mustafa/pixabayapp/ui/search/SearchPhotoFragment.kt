@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
@@ -22,7 +21,10 @@ import com.mustafa.pixabayapp.databinding.FragmentSearchPhotoBinding
 import com.mustafa.pixabayapp.di.Injectable
 import com.mustafa.pixabayapp.models.Status
 import com.mustafa.pixabayapp.ui.common.RetryCallback
+import com.mustafa.pixabayapp.ui.photo.PhotoFragment
 import com.mustafa.pixabayapp.utils.autoCleared
+import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_search_photo.*
 import javax.inject.Inject
 
@@ -66,10 +68,17 @@ class SearchPhotoFragment : Fragment(), Injectable {
         initRecyclerView()
 
         val rvAdapter = PhotoListAdapter(
-            appExecutors = appExecutors
-        ) {
-            Toast.makeText(activity, "We will do it later", Toast.LENGTH_LONG).show()
-        }
+            appExecutors = appExecutors, photoClickCallback = {
+//                Toast.makeText(activity, "we will do it later", Toast.LENGTH_LONG).show()
+
+                val bundle = Bundle()
+                bundle.putSerializable("Photo", it)
+                val photoFragment  =  PhotoFragment()
+                photoFragment.arguments = bundle
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(activity!!.container.id, photoFragment)?.addToBackStack("PhotoFragment")
+                    ?.commit()
+            })
 
         binding.query = searchViewModel.query
         binding.photoListRecyclerView.adapter = rvAdapter
