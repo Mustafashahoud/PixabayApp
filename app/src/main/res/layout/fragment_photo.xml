@@ -5,9 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.mustafa.pixabayapp.models.Photo"/>
         <variable
             name="photo"
-            type="com.mustafa.pixabayapp.models.Photo"/>
+            type="Photo"/>
 
         <import type="com.mustafa.pixabayapp.utils.StringUtils" />
     </data>

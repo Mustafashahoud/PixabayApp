@@ -55,4 +55,32 @@ data class Photo(
     @SerializedName("previewURL")
     val previewUrl: String
 
-) : Serializable
+) : Serializable {
+
+    /**
+     * Empty constructor
+     */
+    constructor() :this ( "",
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        "",
+        -1,
+        "",
+        "", -1,
+        "",
+        -1,
+        "",
+        -1,
+        -1,
+        -1,
+        "",
+        ""
+
+    )
+}

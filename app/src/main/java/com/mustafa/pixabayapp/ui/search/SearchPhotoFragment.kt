@@ -11,6 +11,7 @@ import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -69,15 +70,20 @@ class SearchPhotoFragment : Fragment(), Injectable {
 
         val rvAdapter = PhotoListAdapter(
             appExecutors = appExecutors, photoClickCallback = {
-//                Toast.makeText(activity, "we will do it later", Toast.LENGTH_LONG).show()
 
-                val bundle = Bundle()
-                bundle.putSerializable("Photo", it)
-                val photoFragment  =  PhotoFragment()
-                photoFragment.arguments = bundle
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(activity!!.container.id, photoFragment)?.addToBackStack("PhotoFragment")
-                    ?.commit()
+//                val bundle = Bundle()
+//                bundle.putSerializable("Photo", it)
+//                val photoFragment  =  PhotoFragment()
+//                photoFragment.arguments = bundle
+//                activity?.supportFragmentManager?.beginTransaction()
+//                    ?.add(activity!!.container.id, photoFragment)?.addToBackStack("SearchPhotoFragment")
+//                    ?.commit()
+
+                photo -> navController().navigate(
+                    SearchPhotoFragmentDirections.showPhoto(photo.id)
+                )
+
+
             })
 
         binding.query = searchViewModel.query
@@ -164,4 +170,9 @@ class SearchPhotoFragment : Fragment(), Injectable {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(windowToken, 0)
     }
+
+    /**
+     * Created to be able to override in tests
+     */
+    fun navController() = findNavController()
 }

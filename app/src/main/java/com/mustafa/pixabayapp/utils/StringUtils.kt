@@ -36,6 +36,4 @@ object StringUtils {
     fun getFavoritesAsString(favorites: Int): String {
         return favorites.toString()
     }
-
-
 }

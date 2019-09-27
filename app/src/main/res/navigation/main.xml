@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.mustafa.pixabayapp.ui.search.SearchPhotoFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/showPhoto"
+            app:destination="@id/photoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.mustafa.pixabayapp.ui.photo.PhotoFragment"
+        android:label="PhotoFragment" >
+        <argument
+            android:name="photoId"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>

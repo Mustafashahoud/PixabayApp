@@ -43,7 +43,7 @@ class PhotosRepository @Inject constructor(
 
 
                 if (pageNumber != 1) {
-                    val pg = photoDao.getPageNumber(query)
+//                    val pg = photoDao.getPageNumber(query)
                     val prevPageNumber = pageNumber - 1
                     val photoSearchResult = photoDao.searchResult(query, prevPageNumber)
                     ids.addAll(photoSearchResult.photoIds)
@@ -70,7 +70,7 @@ class PhotosRepository @Inject constructor(
                 return data == null || data.isEmpty() || repoListRateLimit.shouldFetch(query)
             }
 
-            override fun loadFromDb(): LiveData<List<Photo>> { // (query, 2) -> null
+            override fun loadFromDb(): LiveData<List<Photo>> { // when pageNumber = 1 --->(query, 2) -> null
                 return Transformations.switchMap(photoDao.search(query, pageNumber)) {
                         searchData ->
 

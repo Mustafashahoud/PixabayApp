@@ -9,6 +9,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mustafa.pixabayapp.models.Photo
 import com.mustafa.pixabayapp.models.PhotoSearchResult
+import com.mustafa.pixabayapp.models.Resource
 import java.util.*
 
 @Dao
@@ -21,9 +22,6 @@ abstract class PhotoDoa {
     abstract fun insertPhotos(photos: List<Photo>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun createPhotoIfNotExists(photo: Photo): Long
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun insert(result: PhotoSearchResult)
 
     @Query("SELECT * FROM PhotoSearchResult WHERE `query` = :query AND pageNumber = :pageNumber ")
@@ -32,21 +30,17 @@ abstract class PhotoDoa {
     @Query("SELECT * FROM PhotoSearchResult WHERE `query` = :query AND pageNumber = :pageNumber ")
     abstract fun searchResult(query: String, pageNumber: Int): PhotoSearchResult
 
-    @Query("SELECT * FROM PhotoSearchResult WHERE `query` = :query")
-    abstract fun findSearchResult(query: String): PhotoSearchResult?
-
     @Query("SELECT * FROM Photo WHERE id in (:photoIds)")
     abstract fun loadById(photoIds: List<Int>): LiveData<List<Photo>>
-
-    @Query("UPDATE PhotoSearchResult SET `query` = :query, photoIds = :photoIds, pageNumber = :pageNumber WHERE `query` = :query")
-    abstract fun updatePhotoSearchResult(query: String, photoIds: List<Int>, pageNumber: Int)
-
-    @Query("SELECT pageNumber FROM PhotoSearchResult WHERE `query` = :query")
-    abstract fun getNextPage(query: String): Int
 
     @Query(" SELECT pageNumber FROM PhotoSearchResult WHERE `query` = :query")
     abstract fun getPageNumber (query: String): Int
 
+    @Query(" SELECT * FROM Photo WHERE id = :id")
+    abstract fun getPhotoById ( id: Int): LiveData<Photo>
+
+    @Query(" SELECT * FROM Photo WHERE id = :id")
+    abstract fun getPhotoByIdNot ( id: Int): Photo
 
 
 
