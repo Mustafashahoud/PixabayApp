@@ -28,11 +28,12 @@ class PhotosRepository @Inject constructor(
     private val pixBayService: PixBayService
 ) {
 
-    private val repoListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
+    private val repoListRateLimit = RateLimiter<String>(60, TimeUnit.MINUTES)
 
     /**
      * @param query
-     * @return
+     * @return the photos form Database directly if they exist or fetch them form Api service and then save them then load them form Db.
+     * This is what so-called single source of truth https://developer.android.com/jetpack/docs/guide#truth
      */
     fun search(query: String, pageNumber: Int): LiveData<Resource<List<Photo>>> {
         return object : NetworkBoundResource<List<Photo>, PhotoSearchResponse>(appExecutors) {
@@ -43,7 +44,6 @@ class PhotosRepository @Inject constructor(
 
 
                 if (pageNumber != 1) {
-//                    val pg = photoDao.getPageNumber(query)
                     val prevPageNumber = pageNumber - 1
                     val photoSearchResult = photoDao.searchResult(query, prevPageNumber)
                     ids.addAll(photoSearchResult.photoIds)
@@ -56,11 +56,8 @@ class PhotosRepository @Inject constructor(
                     pageNumber = pageNumber
                 )
 
-
-
-                db.runInTransaction{
+                db.runInTransaction {
                     photoDao.insertPhotos(item.photos)
-//                    photoDao.updatePhotoSearchResult(query, ids, pageNumber)
                     photoDao.insert(photoResult)
                 }
 
@@ -70,9 +67,8 @@ class PhotosRepository @Inject constructor(
                 return data == null || data.isEmpty() || repoListRateLimit.shouldFetch(query)
             }
 
-            override fun loadFromDb(): LiveData<List<Photo>> { // when pageNumber = 1 --->(query, 2) -> null
-                return Transformations.switchMap(photoDao.search(query, pageNumber)) {
-                        searchData ->
+            override fun loadFromDb(): LiveData<List<Photo>> { // at the Very beginning When pageNumber = 1 --->(query, 2) -> null
+                return Transformations.switchMap(photoDao.search(query, pageNumber)) { searchData ->
 
                     if (searchData == null) {
                         AbsentLiveData.create()
@@ -81,12 +77,6 @@ class PhotosRepository @Inject constructor(
                     }
                 }
             }
-
-//            override fun processResponse(response: ApiSuccessResponse<PhotoSearchResponse>): PhotoSearchResponse {
-//                val body = response.body
-//                body.next = response.nextPage
-//                return body
-//            }
 
             override fun onFetchFailed() {
                 repoListRateLimit.reset(query)
@@ -98,5 +88,4 @@ class PhotosRepository @Inject constructor(
 
         }.asLiveData()
     }
-
 }

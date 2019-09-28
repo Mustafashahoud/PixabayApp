@@ -1,6 +1,9 @@
 package com.mustafa.pixabayapp.ui.search
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
@@ -9,6 +12,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
@@ -20,6 +24,7 @@ import com.mustafa.pixabayapp.R
 import com.mustafa.pixabayapp.adapters.PhotoListAdapter
 import com.mustafa.pixabayapp.databinding.FragmentSearchPhotoBinding
 import com.mustafa.pixabayapp.di.Injectable
+import com.mustafa.pixabayapp.models.Photo
 import com.mustafa.pixabayapp.models.Status
 import com.mustafa.pixabayapp.ui.common.RetryCallback
 import com.mustafa.pixabayapp.ui.photo.PhotoFragment
@@ -44,6 +49,11 @@ class SearchPhotoFragment : Fragment(), Injectable {
     lateinit var searchViewModel: SearchPhotoViewModel
 
 
+    companion object {
+        private const val DEFAULT_QUERY: String = "fruits"
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,31 +70,32 @@ class SearchPhotoFragment : Fragment(), Injectable {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-         searchViewModel = ViewModelProviders.of(
+        searchViewModel = ViewModelProviders.of(
             this,
-            viewModelFactory).get(SearchPhotoViewModel::class.java)
+            viewModelFactory
+        ).get(SearchPhotoViewModel::class.java)
 
-        binding.setLifecycleOwner (viewLifecycleOwner)
+        binding.setLifecycleOwner(viewLifecycleOwner)
 
         initRecyclerView()
 
         val rvAdapter = PhotoListAdapter(
-            appExecutors = appExecutors, photoClickCallback = {
+            appExecutors = appExecutors
+        ) { photo ->
+            val builder = AlertDialog.Builder(activity)
+            builder.setMessage(R.string.dialog_message)
+                .setPositiveButton(R.string.ok) { dialog, which ->
+                    navController().navigate(SearchPhotoFragmentDirections.showPhoto(photo.id))
+                }
+                .setNegativeButton(R.string.cancel) { dialog, which ->
+                    dialog.dismiss()
+                }
+            builder.create().show()
+        }
 
-//                val bundle = Bundle()
-//                bundle.putSerializable("Photo", it)
-//                val photoFragment  =  PhotoFragment()
-//                photoFragment.arguments = bundle
-//                activity?.supportFragmentManager?.beginTransaction()
-//                    ?.add(activity!!.container.id, photoFragment)?.addToBackStack("SearchPhotoFragment")
-//                    ?.commit()
-
-                photo -> navController().navigate(
-                    SearchPhotoFragmentDirections.showPhoto(photo.id)
-                )
-
-
-            })
+        fun navigate(photo: Photo) {
+            navController().navigate(SearchPhotoFragmentDirections.showPhoto(photo.id))
+        }
 
         binding.query = searchViewModel.query
         binding.photoListRecyclerView.adapter = rvAdapter
@@ -99,19 +110,26 @@ class SearchPhotoFragment : Fragment(), Injectable {
             }
         }
 
-        searchViewModel.executeSearch("fruits", 1)
+        /**
+         *  This logic is because When Rotating the screen the activity will be destroyed
+         *  and re-created and that means executing the initial query again
+         */
+        if (searchViewModel.isScreenRotated) {
+            searchViewModel.isScreenRotated = false
+            searchViewModel.executeSearch(DEFAULT_QUERY, 1)
+        }
 
         searchViewModel.getPhotos().observe(viewLifecycleOwner, Observer { result ->
             if (result.data != null) {
                 adapter.submitList(result.data)
-            } else if (result.status == Status.ERROR){
+            } else if (result.status == Status.ERROR) {
                 adapter.submitList(null)
             }
         })
     }
 
     private fun initSearchInputListener() {
-        binding.searchView.setOnQueryTextListener (object : SearchView.OnQueryTextListener,
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 doSearch(search_view, query!!)
@@ -132,7 +150,6 @@ class SearchPhotoFragment : Fragment(), Injectable {
     }
 
 
-
     private fun initRecyclerView() {
 
         binding.photoListRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -142,7 +159,8 @@ class SearchPhotoFragment : Fragment(), Injectable {
                 val lastPosition = layoutManager.findLastVisibleItemPosition()
                 if (lastPosition == adapter.itemCount - 1) {
                     ///////////////////////////
-                    binding.photoListRecyclerView.post {  // If i don't do that the adapter will consider each new incoming list as whole new and show it starting from the next position
+                    binding.photoListRecyclerView.post {
+                        // If i don't do that the adapter will consider each new incoming list as whole new and show it starting from the next position
                         searchViewModel.isPerformingNextQuery = true
                         searchViewModel.searchNextPage()
                     }
@@ -165,7 +183,13 @@ class SearchPhotoFragment : Fragment(), Injectable {
         binding.searchResult = searchViewModel.photos
 
 
-}
+    }
+
+    /**
+     * dismiss Keyboard
+     *
+     * @param windowToken The token of the window that is making the request, as returned by View.getWindowToken().
+     */
     private fun dismissKeyboard(windowToken: IBinder) {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(windowToken, 0)
@@ -175,4 +199,26 @@ class SearchPhotoFragment : Fragment(), Injectable {
      * Created to be able to override in tests
      */
     fun navController() = findNavController()
+
+
+    class FireMissilesDialogFragment : DialogFragment() {
+
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+            return activity?.let {
+                // Use the Builder class for convenient dialog construction
+                val builder = AlertDialog.Builder(it)
+                builder.setMessage(R.string.app_name)
+                    .setPositiveButton(R.string.app_name,
+                        DialogInterface.OnClickListener { dialog, id ->
+                            // FIRE ZE MISSILES!
+                        })
+                    .setNegativeButton(R.string.app_name,
+                        DialogInterface.OnClickListener { dialog, id ->
+                            // User cancelled the dialog
+                        })
+                // Create the AlertDialog object and return it
+                builder.create()
+            } ?: throw IllegalStateException("Activity cannot be null")
+        }
+    }
 }

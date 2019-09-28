@@ -24,11 +24,4 @@ interface PixBayService {
         @Query("key") ApiKey: String,
         @Query("q") query: String
     ) : LiveData<ApiResponse<PhotoSearchResponse>>
-
-    @GET("api/")
-    fun searchNextPhotos(@Query("key") ApiKey: String,
-                         @Query("q") query: String,
-                         @Query("page") page: Int?)
-            : Call<PhotoSearchResponse>
-
 }

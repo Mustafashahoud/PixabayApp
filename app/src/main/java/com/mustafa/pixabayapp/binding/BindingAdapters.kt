@@ -19,9 +19,11 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("imageUrl")
     fun showPhoto (imageView: ImageView, url : String) {
+        if (url.startsWith("http://"))
+            url.replace("http://", "https://");
         Glide.with(imageView.context)
             .load(url)
-            .placeholder(R.drawable.white_background)
+            .placeholder(R.drawable.ic_image_placeholder)
             .into(imageView)
     }
 }

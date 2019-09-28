@@ -7,10 +7,11 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 @Entity(
-    indices = [Index("id")])
+    indices = [Index("id")]
+)
 data class Photo(
     @SerializedName("largeImageURL")
-    val largeImageUrl : String,
+    val largeImageUrl: String,
     @SerializedName("webformatHeight")
     val webFormatHeight: Int,
     @SerializedName("webformatWidth")
@@ -29,7 +30,7 @@ data class Photo(
     @SerializedName("comments")
     val commentsCount: Int,
     @SerializedName("pageURL")
-    val pageUrl : String,
+    val pageUrl: String,
     @SerializedName("imageHeight")
     val imageHeight: Int,
     @SerializedName("webformatURL")
@@ -55,12 +56,13 @@ data class Photo(
     @SerializedName("previewURL")
     val previewUrl: String
 
-) : Serializable {
+) {
 
     /**
      * Empty constructor
      */
-    constructor() :this ( "",
+    constructor() : this(
+        "",
         -1,
         -1,
         -1,

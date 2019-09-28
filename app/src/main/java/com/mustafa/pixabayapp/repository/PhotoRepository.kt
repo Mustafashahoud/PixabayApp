@@ -16,18 +16,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class PhotoRepository @Inject constructor(
-    private val appExecutors: AppExecutors,
-    private val photoDao: PhotoDoa,
-    private val db: PixBayDatabase
-)  {
-
-
-    var photo: Photo? = null
-    val ff = MediatorLiveData<Photo>()
-    fun loadPhotoById(photoId: Int): LiveData<Photo>{
-        appExecutors.diskIO().execute { photo = photoDao.getPhotoByIdNot(photoId)}
-        ff.value = photo
-        return ff
+    private val photoDao: PhotoDoa
+) {
+    fun loadPhotoById(photoId: Int): LiveData<Photo> {
+        return photoDao.getPhotoById(photoId)
     }
-
 }

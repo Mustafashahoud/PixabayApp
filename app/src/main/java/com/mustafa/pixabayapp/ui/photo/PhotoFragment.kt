@@ -9,13 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.mustafa.pixabayapp.AppExecutors
 import com.mustafa.pixabayapp.R
 import com.mustafa.pixabayapp.databinding.FragmentPhotoBinding
-import com.mustafa.pixabayapp.databinding.FragmentSearchPhotoBinding
 import com.mustafa.pixabayapp.di.Injectable
 import com.mustafa.pixabayapp.models.Photo
-import com.mustafa.pixabayapp.ui.search.SearchPhotoViewModel
 import com.mustafa.pixabayapp.utils.autoCleared
 import javax.inject.Inject
 
@@ -58,12 +55,19 @@ class PhotoFragment : Fragment(), Injectable {
         photoViewModel.setId(params.photoId)
 //        photoViewModel.photo.removeObservers(viewLifecycleOwner)
         photoViewModel.photo.observe(viewLifecycleOwner, Observer {
+
             if (it != null) {
                 binding.photo = it
-            } else {
-                binding.photo = photo
             }
+
         })
+    }
+
+
+    class Observer2<T>(private val block: (T) -> Unit) : Observer<T> {
+        override fun onChanged(data: T?) {
+            data?.let(block)
+        }
     }
 
 

@@ -23,7 +23,7 @@
             android:id="@+id/photo_fragment_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:imageUrl="@{photo.webFormatURL}"/>
+            app:imageUrl='@{photo != null ? photo.webFormatURL : ""}'/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 style="@style/PixabayImageTextUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{StringUtils.getTags(photo.tags)}"
+                android:text='@{photo != null ? StringUtils.getTags(photo.tags) : ""}'
                 tools:text="TEST - TEST - TEST"/>
 
             <RelativeLayout
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="@{StringUtils.byUser(photo.userName)}"
+                    android:text='@{photo != null ? StringUtils.byUser(photo.userName) : ""}'
                     tools:text="By: Mustafa"/>
 
                 <TextView
@@ -63,7 +63,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="4dp"
                     android:drawableStart="@drawable/ic_comment"
-                    android:text="@{StringUtils.getCommentsAsString(photo.commentsCount)}"
+                    android:text='@{photo != null ? StringUtils.getCommentsAsString(photo.commentsCount) : ""}'
                     tools:text="2222"/>
 
                 <TextView
@@ -74,7 +74,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_toStartOf="@id/photo_fragment_comments"
                     android:drawableStart="@drawable/ic_favorite"
-                    android:text="@{StringUtils.getFavoritesAsString(photo.favoritesCount)}"
+                    android:text='@{photo != null ? StringUtils.getFavoritesAsString(photo.favoritesCount) : ""}'
                     tools:text="2222"/>
 
                 <TextView
@@ -85,9 +85,18 @@
                     android:layout_marginEnd="4dp"
                     android:layout_toStartOf="@id/photo_fragment_favorites"
                     android:drawableStart="@drawable/ic_like"
-                    android:text="@{StringUtils.getLikesAsString(photo.likesCount)}"
+                    android:text='@{photo != null ? StringUtils.getLikesAsString(photo.likesCount) : ""}'
                     tools:text="2222"/>
+
             </RelativeLayout>
         </LinearLayout>
+        <ProgressBar
+            app:visibleGone="@{photo == null}"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar"
+            android:layout_centerInParent="true" />
+
     </RelativeLayout>
 </layout>

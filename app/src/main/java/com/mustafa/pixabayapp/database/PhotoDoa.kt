@@ -16,12 +16,9 @@ import java.util.*
 abstract class PhotoDoa {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(vararg photo: Photo)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertPhotos(photos: List<Photo>)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(result: PhotoSearchResult)
 
     @Query("SELECT * FROM PhotoSearchResult WHERE `query` = :query AND pageNumber = :pageNumber ")
@@ -33,16 +30,8 @@ abstract class PhotoDoa {
     @Query("SELECT * FROM Photo WHERE id in (:photoIds)")
     abstract fun loadById(photoIds: List<Int>): LiveData<List<Photo>>
 
-    @Query(" SELECT pageNumber FROM PhotoSearchResult WHERE `query` = :query")
-    abstract fun getPageNumber (query: String): Int
-
     @Query(" SELECT * FROM Photo WHERE id = :id")
-    abstract fun getPhotoById ( id: Int): LiveData<Photo>
-
-    @Query(" SELECT * FROM Photo WHERE id = :id")
-    abstract fun getPhotoByIdNot ( id: Int): Photo
-
-
+    abstract fun getPhotoById(id: Int): LiveData<Photo>
 
     fun loadOrdered(photoIds: List<Int>): LiveData<List<Photo>> {
         val order = SparseIntArray()

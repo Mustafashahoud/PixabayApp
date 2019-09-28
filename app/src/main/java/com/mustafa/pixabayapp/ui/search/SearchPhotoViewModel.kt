@@ -17,13 +17,21 @@ class SearchPhotoViewModel @Inject constructor(private val photoRepository: Phot
 
     val query = _query
     var isPerformingNextQuery = false
-    var isPerformingQuery = false;
-    var pageNumber: Int = 1
-    val loadMoreState = MutableLiveData<LoadMoreState>()
-    var results = MutableLiveData<Resource<List<Photo>>>()
+
+    private var isPerformingQuery = false;
+    private var pageNumber: Int = 1
+    private val loadMoreState = MutableLiveData<LoadMoreState>()
+    private var results = MutableLiveData<Resource<List<Photo>>>()
+
     val photos = MediatorLiveData<Resource<List<Photo>>>()
 
-    fun setQuery(originalInput: String?) {
+    var isScreenRotated = true
+
+    /**
+     * Set the query, it will trigger results MutableLiveData as the _query is the source of it.
+     * @param originalInput the query
+     */
+    private fun setQuery(originalInput: String?) {
         isPerformingQuery = true
         val input = originalInput?.toLowerCase(Locale.getDefault())?.trim()
         if (input == _query.value) {
@@ -36,7 +44,6 @@ class SearchPhotoViewModel @Inject constructor(private val photoRepository: Phot
         _query.value?.let {
             _query.value = it
         }
-
         executeSearch(_query.value, 1)
     }
 
@@ -124,6 +131,11 @@ class SearchPhotoViewModel @Inject constructor(private val photoRepository: Phot
         get() = loadMoreState
 
 
+    /**
+     * Hekper class for loading new pages
+     * @property isRunning
+     * @property errorMessage
+     */
     class LoadMoreState(val isRunning: Boolean, val errorMessage: String?) {
         private var handledError = false
         val errorMessageIfNotHandled: String?
