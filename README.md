@@ -29,7 +29,7 @@
 - Glide for image loading
 - Navigation jetpack for navigating between fragments
 
-### Architechture: ####MVVM
+### Architechture: MVVM
 
 ## App.gif
 
