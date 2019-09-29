@@ -1,9 +1,6 @@
 package com.mustafa.pixabayapp.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.mustafa.pixabayapp.AppExecutors
 import com.mustafa.pixabayapp.database.PixBayDatabase
@@ -12,7 +9,6 @@ import com.mustafa.pixabayapp.models.Photo
 import com.mustafa.pixabayapp.models.PhotoSearchResult
 import com.mustafa.pixabayapp.models.Resource
 import com.mustafa.pixabayapp.network.ApiResponse
-import com.mustafa.pixabayapp.network.ApiSuccessResponse
 import com.mustafa.pixabayapp.network.PixBayService
 import com.mustafa.pixabayapp.network.PhotoSearchResponse
 import com.mustafa.pixabayapp.ui.AbsentLiveData

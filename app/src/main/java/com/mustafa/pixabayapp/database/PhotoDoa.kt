@@ -9,7 +9,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mustafa.pixabayapp.models.Photo
 import com.mustafa.pixabayapp.models.PhotoSearchResult
-import com.mustafa.pixabayapp.models.Resource
 import java.util.*
 
 @Dao

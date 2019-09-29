@@ -93,10 +93,6 @@ class SearchPhotoFragment : Fragment(), Injectable {
             builder.create().show()
         }
 
-        fun navigate(photo: Photo) {
-            navController().navigate(SearchPhotoFragmentDirections.showPhoto(photo.id))
-        }
-
         binding.query = searchViewModel.query
         binding.photoListRecyclerView.adapter = rvAdapter
         adapter = rvAdapter

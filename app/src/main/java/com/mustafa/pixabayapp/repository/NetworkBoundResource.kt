@@ -4,7 +4,6 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
 import com.mustafa.pixabayapp.AppExecutors
 import com.mustafa.pixabayapp.models.Resource
 import com.mustafa.pixabayapp.network.ApiEmptyResponse
