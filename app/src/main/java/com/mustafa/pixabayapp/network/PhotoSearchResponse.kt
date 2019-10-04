@@ -10,6 +10,4 @@ class PhotoSearchResponse(
     val photos: List<Photo>,
     @SerializedName("total")
     val total: Int
-) {
-    var next: Int? = null
-}
+)
