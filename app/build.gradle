@@ -34,11 +34,10 @@ android {
 
 dependencies {
 
-    def glideVersion = "4.9.0"
+    def glideVersion = '4.10.0'
     def room_version = "2.2.0-rc01"
     def lifecycle_version = "2.1.0"
-    def retrofit_version = "2.6.1"
-    def rxJava_version = "2.2.12"
+    def retrofit_version = '2.6.2'
     def dagger_version = "2.24"
     def material_version = "1.0.0"
     def nav_version = "2.1.0"
@@ -79,16 +78,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
 
-    //rxJava
-    implementation "io.reactivex.rxjava2:rxjava:$rxJava_version"
-
-    //RxJava Adapter for adapting RxJava "Retrofit call Adapter"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
-
-    //ReactiveStreams support for LiveData
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
-
-
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -97,4 +86,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+//    def rxJava_version = "2.2.12"
+//    //rxJava it will be used later in another branch
+//    implementation "io.reactivex.rxjava2:rxjava:$rxJava_version"
+//
+//    //RxJava Adapter for adapting RxJava "Retrofit call Adapter"
+//    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+//
+//    //ReactiveStreams support for LiveData
+//    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
 }

@@ -2,10 +2,6 @@ package com.mustafa.pixabayapp.di
 
 import android.app.Application
 import androidx.room.Room
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.RequestOptions
-import com.mustafa.pixabayapp.R
 import com.mustafa.pixabayapp.database.PixBayDatabase
 import com.mustafa.pixabayapp.database.PhotoDoa
 import com.mustafa.pixabayapp.network.PixBayService
@@ -23,29 +19,13 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideGithubService(): PixBayService {
+    fun providePixBayService(): PixBayService {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(PixBayService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideRequestGlideOptions(): RequestOptions {
-        return RequestOptions
-            .placeholderOf(R.drawable.white_background)
-            .error(R.drawable.white_background)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGlideInstance(application: Application, requestOptions: RequestOptions) : RequestManager {
-        return Glide.with(application)
-            .setDefaultRequestOptions(requestOptions)
-
     }
 
     @Singleton
