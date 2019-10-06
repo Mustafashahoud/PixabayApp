@@ -18,10 +18,4 @@ interface PixBayService {
         @Query("q") query: String,
         @Query("page") page: Int
         ) : LiveData<ApiResponse<PhotoSearchResponse>> // it can be Flowable when Using RX-Java2
-
-    @GET("api/")
-    fun searchPhotos (
-        @Query("key") ApiKey: String,
-        @Query("q") query: String
-    ) : LiveData<ApiResponse<PhotoSearchResponse>>
 }
