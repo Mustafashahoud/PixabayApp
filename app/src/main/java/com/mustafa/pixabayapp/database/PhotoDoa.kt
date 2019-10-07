@@ -1,6 +1,7 @@
 package com.mustafa.pixabayapp.database
 
 import android.util.SparseIntArray
+import androidx.collection.SparseArrayCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.room.Dao
@@ -33,7 +34,7 @@ abstract class PhotoDoa {
     abstract fun getPhotoById(id: Int): LiveData<Photo>
 
     fun loadOrdered(photoIds: List<Int>): LiveData<List<Photo>> {
-        val order = SparseIntArray()
+        val order = SparseArrayCompat<Int>() // SparseIntArray can be used .. but it would need mocking
         photoIds.withIndex().forEach {
             order.put(it.value, it.index)
         }
@@ -42,7 +43,7 @@ abstract class PhotoDoa {
             Collections.sort(photos) { r1, r2 ->
                 val pos1 = order.get(r1.id)
                 val pos2 = order.get(r2.id)
-                pos1 - pos2
+                pos1!! - pos2!!
             }
             return photos
         })
