@@ -24,7 +24,7 @@ class PhotosRepository @Inject constructor(
     private val pixBayService: PixBayService
 ) {
 
-    private val repoListRateLimit = RateLimiter<String>(60, TimeUnit.MINUTES)
+    private val photoListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
 
     /**
      * @param query
@@ -39,7 +39,7 @@ class PhotosRepository @Inject constructor(
                 val photoIds: List<Int> = item.photos.map { it.id }
 
 
-                if (pageNumber != 1) {
+                if (pageNumber != 1 ) {
                     val prevPageNumber = pageNumber - 1
                     val photoSearchResult = photoDao.searchResult(query, prevPageNumber)
                     ids.addAll(photoSearchResult.photoIds)
@@ -60,13 +60,13 @@ class PhotosRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Photo>?): Boolean {
-                return data == null || data.isEmpty() || repoListRateLimit.shouldFetch(query)
+                return data == null || data.isEmpty() || photoListRateLimit.shouldFetch(query)
             }
 
             override fun loadFromDb(): LiveData<List<Photo>> { // at the Very beginning When pageNumber = 1 --->(query, 2) -> null
                 return Transformations.switchMap(photoDao.search(query, pageNumber)) { searchData ->
 
-                    if (searchData == null) {
+                    if (searchData == null || photoListRateLimit.shouldFetch(query)) {
                         AbsentLiveData.create()
                     } else {
                         photoDao.loadOrdered(searchData.photoIds)
@@ -75,7 +75,7 @@ class PhotosRepository @Inject constructor(
             }
 
             override fun onFetchFailed() {
-                repoListRateLimit.reset(query)
+                photoListRateLimit.reset(query)
             }
 
             override fun createCall(): LiveData<ApiResponse<PhotoSearchResponse>> {
