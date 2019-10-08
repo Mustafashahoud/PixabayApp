@@ -54,7 +54,7 @@ class PhotosRepositoryTest {
         val photos = MutableLiveData<List<Photo>>()
 
         val photoList = arrayListOf(photo1, photo2)
-        val apiResponse = PhotoSearchResponse(Random.hashCode(), photoList, 2)
+        val apiResponse = PhotoSearchResponse(Math.random().toInt(), photoList, 2)
 
         // #1
         val callLiveData = MutableLiveData<ApiResponse<PhotoSearchResponse>>()
