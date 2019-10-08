@@ -24,7 +24,7 @@ class PhotosRepository @Inject constructor(
     private val pixBayService: PixBayService
 ) {
 
-    private val photoListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
+    private val photoListRateLimit = RateLimiter<String>(60, TimeUnit.MINUTES)
 
     /**
      * @param query
@@ -66,7 +66,7 @@ class PhotosRepository @Inject constructor(
             override fun loadFromDb(): LiveData<List<Photo>> { // at the Very beginning When pageNumber = 1 --->(query, 2) -> null
                 return Transformations.switchMap(photoDao.search(query, pageNumber)) { searchData ->
 
-                    if (searchData == null || photoListRateLimit.shouldFetch(query)) {
+                    if (searchData == null ) {
                         AbsentLiveData.create()
                     } else {
                         photoDao.loadOrdered(searchData.photoIds)
