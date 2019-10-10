@@ -11,10 +11,7 @@ import javax.inject.Inject
 class PhotoViewModel @Inject constructor(private val photoRepository: PhotoRepository) :
     ViewModel() {
 
-    private var _photoId = MutableLiveData<Int>()
-    val photoId: LiveData<Int>
-        get() = _photoId
-
+    private val _photoId = MutableLiveData<Int>()
 
     val photo: LiveData<Photo> = Transformations
         .switchMap(_photoId) { id ->
