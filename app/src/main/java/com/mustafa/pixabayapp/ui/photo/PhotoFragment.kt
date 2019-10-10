@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.mustafa.pixabayapp.R
 import com.mustafa.pixabayapp.databinding.FragmentPhotoBinding
 import com.mustafa.pixabayapp.di.Injectable
-import com.mustafa.pixabayapp.models.Photo
 import com.mustafa.pixabayapp.utils.autoCleared
 import javax.inject.Inject
 
@@ -25,16 +24,13 @@ class PhotoFragment : Fragment(), Injectable {
 
     lateinit var photoViewModel: PhotoViewModel
 
-     var photo = Photo()
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-         binding = DataBindingUtil.inflate<FragmentPhotoBinding>(
+         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_photo,
             container,
@@ -62,13 +58,5 @@ class PhotoFragment : Fragment(), Injectable {
 
         })
     }
-
-
-    class Observer2<T>(private val block: (T) -> Unit) : Observer<T> {
-        override fun onChanged(data: T?) {
-            data?.let(block)
-        }
-    }
-
 
 }
