@@ -16,7 +16,9 @@ import com.mustafa.pixabayapp.utils.Constants
 import com.mustafa.pixabayapp.utils.RateLimiter
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PhotosRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val db: PixBayDatabase,

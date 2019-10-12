@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import com.mustafa.pixabayapp.database.PhotoDoa
 import com.mustafa.pixabayapp.models.Photo
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDoa
 ) {
