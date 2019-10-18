@@ -10,7 +10,7 @@
 
         <import type="java.util.List" />
 
-        <import type="com.mustafa.pixabayapp.models.Status" />
+        <import type="com.mustafa.pixabayapp.utils.Status" />
 
         <import type="com.mustafa.pixabayapp.models.Resource" />
 
@@ -30,7 +30,7 @@
 
         <variable
             name="callback"
-            type="com.mustafa.pixabayapp.ui.common.RetryCallback" />
+            type="com.mustafa.pixabayapp.common.RetryCallback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,7 +1,6 @@
 package com.mustafa.pixabayapp.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.mustafa.pixabay.util.TestUtil
@@ -11,19 +10,17 @@ import com.mustafa.pixabayapp.database.PixBayDatabase
 import com.mustafa.pixabayapp.models.Photo
 import com.mustafa.pixabayapp.models.PhotoSearchResult
 import com.mustafa.pixabayapp.models.Resource
-import com.mustafa.pixabayapp.network.ApiResponse
-import com.mustafa.pixabayapp.network.PhotoSearchResponse
-import com.mustafa.pixabayapp.network.PixBayService
+import com.mustafa.pixabayapp.api.ApiResponse
+import com.mustafa.pixabayapp.api.PhotoSearchResponse
+import com.mustafa.pixabayapp.api.PixBayService
 import com.mustafa.pixabayapp.util.InstantAppExecutors
 import com.mustafa.pixabayapp.utils.Constants
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers
-import org.mockito.Mockito
 import org.mockito.Mockito.*
 import retrofit2.Response
-import kotlin.random.Random
 
 class PhotosRepositoryTest {
     private lateinit var repository: PhotosRepository

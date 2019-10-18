@@ -1,12 +1,9 @@
-package com.mustafa.pixabayapp.network
+package com.mustafa.pixabayapp.api
 
 
-import com.mustafa.pixabayapp.network.ApiErrorResponse
-import com.mustafa.pixabayapp.network.ApiResponse
-import com.mustafa.pixabayapp.network.ApiSuccessResponse
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -37,7 +34,7 @@ class ApiResponseTest {
     fun error () {
         val errorResponse = Response.error<String>(
             400,
-            ResponseBody.create("application/txt".toMediaTypeOrNull(), "error")
+            "error".toResponseBody("application/txt".toMediaTypeOrNull())
         )
         val apiErrorResponse = ApiResponse.create<String>(errorResponse) as ApiErrorResponse
         val errorMessage = apiErrorResponse.errorMessage

@@ -1,4 +1,4 @@
-package com.mustafa.pixabayapp.network
+package com.mustafa.pixabayapp.api
 
 import retrofit2.Response
 

@@ -1,4 +1,4 @@
-package com.mustafa.pixabayapp.network
+package com.mustafa.pixabayapp.api
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.mustafa.pixabay.util.LiveDataTestUtil.getValue
@@ -49,14 +49,20 @@ class PixBayServiceTest {
     @Test
     fun getPhotos() {
         enqueueResponse("search.json")
-        val response = getValue(service.searchPhotos(Constants.API_KEY, "Test", 1)) as ApiSuccessResponse
+        val response = getValue(
+            service.searchPhotos(
+                Constants.API_KEY,
+                "Test",
+                1
+            )
+        ) as ApiSuccessResponse
         assertThat(response, notNullValue())
         assertThat(response.body.total, CoreMatchers.`is`(4495))
         assertThat(response.body.photos.size, CoreMatchers.`is`(20))
         assertThat(response.body.totalHits, CoreMatchers.`is`(500))
     }
 
-    private fun enqueueResponse(fileName: String) {
+    private fun enqueueResponse(@Suppress("SameParameterValue") fileName: String) {
         @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         val inputStream = javaClass.classLoader
             .getResourceAsStream("api-response/$fileName")

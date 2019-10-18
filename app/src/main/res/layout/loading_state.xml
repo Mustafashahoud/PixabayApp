@@ -7,7 +7,7 @@
 
         <import type="com.mustafa.pixabayapp.models.Resource" />
 
-        <import type="com.mustafa.pixabayapp.models.Status" />
+        <import type="com.mustafa.pixabayapp.utils.Status" />
 
         <variable
             name="resource"
@@ -15,7 +15,7 @@
 
         <variable
             name="callback"
-            type="com.mustafa.pixabayapp.ui.common.RetryCallback" />
+            type="com.mustafa.pixabayapp.common.RetryCallback" />
     </data>
 
     <LinearLayout

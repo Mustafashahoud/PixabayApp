@@ -1,4 +1,4 @@
-package com.mustafa.pixabayapp.models
+package com.mustafa.pixabayapp.utils
 
 /**
  * Status of a resource that is provided to the UI.

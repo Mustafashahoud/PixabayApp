@@ -2,7 +2,7 @@ package com.mustafa.pixabayapp.util
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mustafa.pixabayapp.network.ApiResponse
+import com.mustafa.pixabayapp.api.ApiResponse
 import retrofit2.Response
 
 object ApiUtil {

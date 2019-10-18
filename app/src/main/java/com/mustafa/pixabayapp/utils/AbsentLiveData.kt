@@ -1,4 +1,4 @@
-package com.mustafa.pixabayapp.ui
+package com.mustafa.pixabayapp.utils
 
 import androidx.lifecycle.LiveData
 

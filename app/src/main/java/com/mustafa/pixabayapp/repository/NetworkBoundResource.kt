@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.mustafa.pixabayapp.AppExecutors
 import com.mustafa.pixabayapp.models.Resource
-import com.mustafa.pixabayapp.network.ApiEmptyResponse
-import com.mustafa.pixabayapp.network.ApiErrorResponse
-import com.mustafa.pixabayapp.network.ApiResponse
-import com.mustafa.pixabayapp.network.ApiSuccessResponse
+import com.mustafa.pixabayapp.api.ApiEmptyResponse
+import com.mustafa.pixabayapp.api.ApiErrorResponse
+import com.mustafa.pixabayapp.api.ApiResponse
+import com.mustafa.pixabayapp.api.ApiSuccessResponse
 
 // CacheType: Type for the Resource data. (database cache)
 // NetworkType: Type for the API response. (network request) retrieved from network

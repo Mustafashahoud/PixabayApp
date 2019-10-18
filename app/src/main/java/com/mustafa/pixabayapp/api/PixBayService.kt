@@ -1,7 +1,6 @@
-package com.mustafa.pixabayapp.network
+package com.mustafa.pixabayapp.api
 
 import androidx.lifecycle.LiveData
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.mustafa.pixabayapp.database.PixBayDatabase
 import com.mustafa.pixabayapp.database.PhotoDoa
-import com.mustafa.pixabayapp.network.PixBayService
+import com.mustafa.pixabayapp.api.PixBayService
 import com.mustafa.pixabayapp.utils.Constants
 import com.mustafa.pixabayapp.utils.LiveDataCallAdapterFactory
 import dagger.Module

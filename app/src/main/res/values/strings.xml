@@ -4,6 +4,6 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="empty_search_result">No results for <b>%s</b></string>
     <string name="dialog_message">Would you like to see more details?</string>
-    <string name="ok">ok</string>
-    <string name="cancel">cancel</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

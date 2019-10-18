@@ -1,12 +1,11 @@
 package com.mustafa.pixabayapp.ui.search
 
 import androidx.lifecycle.*
-import androidx.lifecycle.Observer
 import com.mustafa.pixabayapp.models.Photo
 import com.mustafa.pixabayapp.models.Resource
-import com.mustafa.pixabayapp.models.Status
+import com.mustafa.pixabayapp.utils.Status
 import com.mustafa.pixabayapp.repository.PhotosRepository
-import com.mustafa.pixabayapp.ui.AbsentLiveData
+import com.mustafa.pixabayapp.utils.AbsentLiveData
 import java.util.*
 import javax.inject.Inject
 
@@ -18,7 +17,7 @@ class SearchPhotoViewModel @Inject constructor(private val photoRepository: Phot
     val query = _query
     var isPerformingNextQuery = false
 
-    private var isPerformingQuery = false;
+    private var isPerformingQuery = false
     private var pageNumber: Int = 1
     private val loadMoreState = MutableLiveData<LoadMoreState>()
     private var results = MutableLiveData<Resource<List<Photo>>>()

@@ -1,5 +1,7 @@
 package com.mustafa.pixabayapp.models
 
+import com.mustafa.pixabayapp.utils.Status
+
 
 /**
  * A generic class that holds a value with its loading status.

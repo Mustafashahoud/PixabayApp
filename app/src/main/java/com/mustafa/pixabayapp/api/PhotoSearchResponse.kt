@@ -1,4 +1,4 @@
-package com.mustafa.pixabayapp.network
+package com.mustafa.pixabayapp.api
 
 import com.google.gson.annotations.SerializedName
 import com.mustafa.pixabayapp.models.Photo

@@ -8,10 +8,10 @@ import com.mustafa.pixabayapp.database.PhotoDoa
 import com.mustafa.pixabayapp.models.Photo
 import com.mustafa.pixabayapp.models.PhotoSearchResult
 import com.mustafa.pixabayapp.models.Resource
-import com.mustafa.pixabayapp.network.ApiResponse
-import com.mustafa.pixabayapp.network.PixBayService
-import com.mustafa.pixabayapp.network.PhotoSearchResponse
-import com.mustafa.pixabayapp.ui.AbsentLiveData
+import com.mustafa.pixabayapp.api.ApiResponse
+import com.mustafa.pixabayapp.api.PixBayService
+import com.mustafa.pixabayapp.api.PhotoSearchResponse
+import com.mustafa.pixabayapp.utils.AbsentLiveData
 import com.mustafa.pixabayapp.utils.Constants
 import com.mustafa.pixabayapp.utils.RateLimiter
 import java.util.concurrent.TimeUnit

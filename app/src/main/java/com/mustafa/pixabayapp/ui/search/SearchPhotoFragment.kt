@@ -21,8 +21,8 @@ import com.mustafa.pixabayapp.R
 import com.mustafa.pixabayapp.adapters.PhotoListAdapter
 import com.mustafa.pixabayapp.databinding.FragmentSearchPhotoBinding
 import com.mustafa.pixabayapp.di.Injectable
-import com.mustafa.pixabayapp.models.Status
-import com.mustafa.pixabayapp.ui.common.RetryCallback
+import com.mustafa.pixabayapp.utils.Status
+import com.mustafa.pixabayapp.common.RetryCallback
 import com.mustafa.pixabayapp.utils.autoCleared
 import kotlinx.android.synthetic.main.fragment_search_photo.*
 import javax.inject.Inject
@@ -68,7 +68,7 @@ class SearchPhotoFragment : Fragment(), Injectable {
             viewModelFactory
         ).get(SearchPhotoViewModel::class.java)
 
-        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         initRecyclerView()
 

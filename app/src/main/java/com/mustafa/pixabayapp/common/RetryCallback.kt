@@ -1,4 +1,4 @@
-package com.mustafa.pixabayapp.ui.common
+package com.mustafa.pixabayapp.common
 
 /**
  * Generic interface for retry buttons.

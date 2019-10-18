@@ -1,6 +1,7 @@
-package com.mustafa.pixabayapp.di
+package com.mustafa.pixabayapp
 
 import android.app.Application
+import com.mustafa.pixabayapp.di.AppInjector
 import dagger.android.*
 import javax.inject.Inject
  // HasAndroidInjector instead of HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector, HasBroadcastReceiverInjector

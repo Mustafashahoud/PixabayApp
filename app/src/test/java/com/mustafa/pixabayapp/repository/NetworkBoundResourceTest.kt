@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.mustafa.pixabay.util.CountingAppExecutors
 import com.mustafa.pixabay.util.mock
 import com.mustafa.pixabayapp.models.Resource
-import com.mustafa.pixabayapp.network.ApiResponse
+import com.mustafa.pixabayapp.api.ApiResponse
 import com.mustafa.pixabayapp.util.ApiUtil
 import com.mustafa.pixabayapp.util.InstantAppExecutors
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

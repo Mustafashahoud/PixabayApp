@@ -1,6 +1,7 @@
 package com.mustafa.pixabayapp.di
 
 import android.app.Application
+import com.mustafa.pixabayapp.PixBayApp
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
