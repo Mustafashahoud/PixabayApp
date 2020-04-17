@@ -31,9 +31,11 @@
 
 ### Architechture: MVVM
 
-## App.gif
+## App Demo
 
-![PixabayApp](https://user-images.githubusercontent.com/33812602/65810719-34ecbd00-e1ae-11e9-9190-1f28979e4349.gif)
-
-
-
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/33812602/79617726-745a0700-8108-11ea-8552-41430e587523.jpg" height="400" />
+  <img src="https://user-images.githubusercontent.com/33812602/79617730-7a4fe800-8108-11ea-8f64-a99703a92732.jpg" height="400" />
+  <img src="https://user-images.githubusercontent.com/33812602/79617733-7c19ab80-8108-11ea-888a-6aae73c34ce9.jpg" height="400" />
+  <img src="https://user-images.githubusercontent.com/33812602/65810719-34ecbd00-e1ae-11e9-9190-1f28979e4349.gif" height="400">
+</p>
